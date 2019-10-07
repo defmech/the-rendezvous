@@ -12,7 +12,7 @@ const speed = { min: 1, max: 4 };
 
 const createjs = window.createjs;
 
-const sizeScaler = 1;
+const sizeScaler = 0.75;
 
 const howMany = {
 	wiggles: MathUtils.randInt(5, 10),
@@ -26,8 +26,10 @@ const howMany = {
 export default class Demo {
 	constructor(container) {
 		this.container = container;
-		this.container.width = window.innerWidth;
-		this.container.height = window.innerHeight;
+		this.container.width = window.innerWidth * window.devicePixelRatio;
+		this.container.height = window.innerHeight * window.devicePixelRatio;
+		this.container.style.width = window.innerWidth + "px";
+		this.container.style.height = window.innerHeight + "px";
 		console.log("Demo", this.container);
 
 		this.wiggles = [];
@@ -48,8 +50,8 @@ export default class Demo {
 		};
 
 		window.onresize = event => {
-			this.container.width = window.innerWidth;
-			this.container.height = window.innerHeight;
+			this.container.width = window.innerWidth * window.devicePixelRatio;
+			this.container.height = window.innerHeight * window.devicePixelRatio;
 
 			if (this.grid) this.stage.removeChild(this.grid);
 
@@ -74,6 +76,8 @@ export default class Demo {
 
 	init() {
 		this.stage = new createjs.Stage(this.container);
+		this.stage.scaleX = window.devicePixelRatio;
+		this.stage.scaleY = window.devicePixelRatio;
 
 		console.dir(this.stage.canvas);
 
