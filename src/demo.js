@@ -12,7 +12,7 @@ const speed = { min: 1, max: 4 };
 
 const createjs = window.createjs;
 
-const sizeScaler = 0.75;
+const sizeScaler = 1;
 
 const howMany = {
 	wiggles: MathUtils.randInt(5, 10),

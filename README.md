@@ -2,6 +2,8 @@
 
 Inspired by the label of @pressuredropbrw's collaboration with @gammabrewing. The Rendezvous — a 6.8% DDH NEIPA.
 
+![The Rendezvous](/the-rendezvous-screenshot.png?raw=true)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
