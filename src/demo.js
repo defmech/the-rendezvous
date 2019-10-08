@@ -109,10 +109,11 @@ export default class Demo {
 
 				wiggle.vec = this.getRandomVec();
 
-				wiggle.speed = MathUtils.randInt(speed.min, speed.max);
+				wiggle.speed = this.getRandomSpeed();
 
 				wiggle.addEventListener("click", () => {
 					wiggle.vec = this.getRandomVec();
+					wiggle.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(wiggle);
@@ -133,10 +134,11 @@ export default class Demo {
 
 				zaggle.vec = this.getRandomVec();
 
-				zaggle.speed = MathUtils.randInt(speed.min, speed.max);
+				zaggle.speed = this.getRandomSpeed();
 
 				zaggle.addEventListener("click", () => {
 					zaggle.vec = this.getRandomVec();
+					zaggle.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(zaggle);
@@ -156,10 +158,11 @@ export default class Demo {
 				square.y = Math.random() * this.stage.canvas.offsetHeight;
 
 				square.vec = this.getRandomVec();
-				square.speed = MathUtils.randInt(speed.min, speed.max);
+				square.speed = this.getRandomSpeed();
 
 				square.addEventListener("click", () => {
 					square.vec = this.getRandomVec();
+					square.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(square);
@@ -179,11 +182,12 @@ export default class Demo {
 				circle.y = Math.random() * this.stage.canvas.offsetHeight;
 
 				circle.vec = this.getRandomVec();
-				circle.speed = MathUtils.randInt(speed.min, speed.max);
+				circle.speed = this.getRandomSpeed();
 				circle.seed = Math.random();
 
 				circle.addEventListener("click", () => {
 					circle.vec = this.getRandomVec();
+					circle.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(circle);
@@ -203,11 +207,12 @@ export default class Demo {
 				triangle.y = Math.random() * this.stage.canvas.offsetHeight;
 
 				triangle.vec = this.getRandomVec();
-				triangle.speed = MathUtils.randInt(speed.min, speed.max);
+				triangle.speed = this.getRandomSpeed();
 				triangle.seed = Math.random();
 
 				triangle.addEventListener("click", () => {
 					triangle.vec = this.getRandomVec();
+					triangle.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(triangle);
@@ -225,11 +230,12 @@ export default class Demo {
 				capsule.y = Math.random() * this.stage.canvas.offsetHeight;
 
 				capsule.vec = this.getRandomVec();
-				capsule.speed = MathUtils.randInt(speed.min, speed.max);
+				capsule.speed = this.getRandomSpeed();
 				capsule.seed = Math.random();
 
 				capsule.addEventListener("click", () => {
 					capsule.vec = this.getRandomVec();
+					capsule.speed = this.getRandomSpeed();
 				});
 
 				main.addChild(capsule);
@@ -288,6 +294,10 @@ export default class Demo {
 			x: MathUtils.randFloatSpread(2),
 			y: MathUtils.randFloatSpread(2),
 		};
+	}
+
+	getRandomSpeed() {
+		return MathUtils.randInt(speed.min, speed.max);
 	}
 
 	getBetween(minMax) {
