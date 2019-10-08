@@ -5,7 +5,7 @@ Inspired by the label of [@pressuredropbrw](https://www.instagram.com/pressuredr
 ![The Rendezvous](/the-rendezvous-screenshot.png?raw=true)
 ![Inspiration](/inspiration.jpg?raw=true)
 
-[https://www.instagram.com/gammabrewing/](https://davidlochhead.xyz/experiments/the-rendezvous/)
+[https://davidlochhead.xyz/experiments/the-rendezvous/](https://davidlochhead.xyz/experiments/the-rendezvous/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
