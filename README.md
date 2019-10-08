@@ -1,8 +1,11 @@
 # The Rendevous
 
-Inspired by the label of @pressuredropbrw's collaboration with @gammabrewing. The Rendezvous — a 6.8% DDH NEIPA.
+Inspired by the label of [@pressuredropbrw](https://www.instagram.com/pressuredropbrw/)'s collaboration with [@gammabrewing](https://www.instagram.com/gammabrewing/). The Rendezvous — a 6.8% DDH NEIPA.
 
 ![The Rendezvous](/the-rendezvous-screenshot.png?raw=true)
+![Inspiration](/inspiration.jpg?raw=true)
+
+[https://www.instagram.com/gammabrewing/](https://davidlochhead.xyz/experiments/the-rendezvous/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
