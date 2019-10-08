@@ -64,18 +64,16 @@ export default class Demo {
 	}
 
 	attemptFullscreen() {
-		if (document.fullscreenEnabled === true && document.fullscreen === false) {
-			if (this.container.requestFullscreen) {
-				this.container.requestFullscreen();
-			} else if (this.container.mozRequestFullScreen) {
-				this.container.mozRequestFullScreen();
-			} else if (this.container.webkitRequestFullscreen) {
-				this.container.webkitRequestFullscreen(
-					this.container.ALLOW_KEYBOARD_INPUT
-				);
-			} else if (this.container.msRequestFullscreen) {
-				this.container.msRequestFullscreen();
-			}
+		if (this.container.requestFullscreen) {
+			this.container.requestFullscreen();
+		} else if (this.container.mozRequestFullScreen) {
+			this.container.mozRequestFullScreen();
+		} else if (this.container.webkitRequestFullscreen) {
+			this.container.webkitRequestFullscreen(
+				this.container.ALLOW_KEYBOARD_INPUT
+			);
+		} else if (this.container.msRequestFullscreen) {
+			this.container.msRequestFullscreen();
 		}
 	}
 
