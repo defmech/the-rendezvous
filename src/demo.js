@@ -26,10 +26,7 @@ const howMany = {
 export default class Demo {
 	constructor(container) {
 		this.container = container;
-		this.container.width = window.innerWidth * window.devicePixelRatio;
-		this.container.height = window.innerHeight * window.devicePixelRatio;
-		this.container.style.width = window.innerWidth + "px";
-		this.container.style.height = window.innerHeight + "px";
+		this.setContainerSize();
 		console.log("Demo", this.container);
 
 		this.wiggles = [];
@@ -50,8 +47,7 @@ export default class Demo {
 		};
 
 		window.onresize = event => {
-			this.container.width = window.innerWidth * window.devicePixelRatio;
-			this.container.height = window.innerHeight * window.devicePixelRatio;
+			this.setContainerSize();
 
 			if (this.grid) this.stage.removeChild(this.grid);
 
@@ -60,17 +56,26 @@ export default class Demo {
 		};
 	}
 
+	setContainerSize() {
+		this.container.width = window.innerWidth * window.devicePixelRatio;
+		this.container.height = window.innerHeight * window.devicePixelRatio;
+		this.container.style.width = window.innerWidth + "px";
+		this.container.style.height = window.innerHeight + "px";
+	}
+
 	attemptFullscreen() {
-		if (this.container.requestFullscreen) {
-			this.container.requestFullscreen();
-		} else if (this.container.mozRequestFullScreen) {
-			this.container.mozRequestFullScreen();
-		} else if (this.container.webkitRequestFullscreen) {
-			this.container.webkitRequestFullscreen(
-				this.container.ALLOW_KEYBOARD_INPUT
-			);
-		} else if (this.container.msRequestFullscreen) {
-			this.container.msRequestFullscreen();
+		if (document.fullscreenEnabled === true && document.fullscreen === false) {
+			if (this.container.requestFullscreen) {
+				this.container.requestFullscreen();
+			} else if (this.container.mozRequestFullScreen) {
+				this.container.mozRequestFullScreen();
+			} else if (this.container.webkitRequestFullscreen) {
+				this.container.webkitRequestFullscreen(
+					this.container.ALLOW_KEYBOARD_INPUT
+				);
+			} else if (this.container.msRequestFullscreen) {
+				this.container.msRequestFullscreen();
+			}
 		}
 	}
 
@@ -104,12 +109,13 @@ export default class Demo {
 				wiggle.x = Math.random() * this.stage.canvas.offsetWidth;
 				wiggle.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				wiggle.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				wiggle.vec = this.getRandomVec();
 
 				wiggle.speed = MathUtils.randInt(speed.min, speed.max);
+
+				wiggle.addEventListener("click", () => {
+					wiggle.vec = this.getRandomVec();
+				});
 
 				main.addChild(wiggle);
 
@@ -127,12 +133,13 @@ export default class Demo {
 				zaggle.x = Math.random() * this.stage.canvas.offsetWidth;
 				zaggle.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				zaggle.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				zaggle.vec = this.getRandomVec();
 
 				zaggle.speed = MathUtils.randInt(speed.min, speed.max);
+
+				zaggle.addEventListener("click", () => {
+					zaggle.vec = this.getRandomVec();
+				});
 
 				main.addChild(zaggle);
 
@@ -150,11 +157,12 @@ export default class Demo {
 				square.x = Math.random() * this.stage.canvas.offsetWidth;
 				square.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				square.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				square.vec = this.getRandomVec();
 				square.speed = MathUtils.randInt(speed.min, speed.max);
+
+				square.addEventListener("click", () => {
+					square.vec = this.getRandomVec();
+				});
 
 				main.addChild(square);
 
@@ -172,12 +180,13 @@ export default class Demo {
 				circle.x = Math.random() * this.stage.canvas.offsetWidth;
 				circle.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				circle.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				circle.vec = this.getRandomVec();
 				circle.speed = MathUtils.randInt(speed.min, speed.max);
 				circle.seed = Math.random();
+
+				circle.addEventListener("click", () => {
+					circle.vec = this.getRandomVec();
+				});
 
 				main.addChild(circle);
 
@@ -195,12 +204,13 @@ export default class Demo {
 				triangle.x = Math.random() * this.stage.canvas.offsetWidth;
 				triangle.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				triangle.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				triangle.vec = this.getRandomVec();
 				triangle.speed = MathUtils.randInt(speed.min, speed.max);
 				triangle.seed = Math.random();
+
+				triangle.addEventListener("click", () => {
+					triangle.vec = this.getRandomVec();
+				});
 
 				main.addChild(triangle);
 
@@ -216,12 +226,13 @@ export default class Demo {
 				capsule.x = Math.random() * this.stage.canvas.offsetWidth;
 				capsule.y = Math.random() * this.stage.canvas.offsetHeight;
 
-				capsule.vec = {
-					x: Math.random() * 2 - 1,
-					y: Math.random() * 2 - 1,
-				};
+				capsule.vec = this.getRandomVec();
 				capsule.speed = MathUtils.randInt(speed.min, speed.max);
 				capsule.seed = Math.random();
+
+				capsule.addEventListener("click", () => {
+					capsule.vec = this.getRandomVec();
+				});
 
 				main.addChild(capsule);
 
@@ -272,6 +283,13 @@ export default class Demo {
 				});
 			}
 		});
+	}
+
+	getRandomVec() {
+		return {
+			x: MathUtils.randFloatSpread(2),
+			y: MathUtils.randFloatSpread(2),
+		};
 	}
 
 	getBetween(minMax) {
