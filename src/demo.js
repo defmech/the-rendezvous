@@ -12,8 +12,6 @@ const speed = { min: 1, max: 4 };
 
 const createjs = window.createjs;
 
-const sizeScaler = 1;
-
 const howMany = {
 	wiggles: MathUtils.randInt(5, 10),
 	circles: MathUtils.randInt(5, 10),
@@ -26,8 +24,9 @@ const howMany = {
 export default class Demo {
 	constructor(container) {
 		this.container = container;
+		// console.log("Demo", this.container);
 		this.setContainerSize();
-		console.log("Demo", this.container);
+		this.sizeScaler = this.getSizeScaler();
 
 		this.wiggles = [];
 		this.circles = [];
@@ -36,7 +35,7 @@ export default class Demo {
 		this.capsules = [];
 		this.zaggles = [];
 
-		console.dir(window);
+		// console.dir(window);
 		this.init();
 
 		window.onclick = event => {
@@ -54,6 +53,16 @@ export default class Demo {
 			this.grid = this.getGrid();
 			this.stage.addChildAt(this.grid, 0);
 		};
+	}
+
+	getSizeScaler() {
+		const hyp = 1448;
+
+		const curHyp = Math.sqrt(
+			Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)
+		);
+
+		return curHyp / hyp;
 	}
 
 	setContainerSize() {
@@ -82,7 +91,7 @@ export default class Demo {
 		this.stage.scaleX = window.devicePixelRatio;
 		this.stage.scaleY = window.devicePixelRatio;
 
-		console.dir(this.stage.canvas);
+		// console.dir(this.stage.canvas);
 
 		this.grid = this.getGrid();
 		this.stage.addChild(this.grid);
@@ -90,8 +99,8 @@ export default class Demo {
 		const main = new createjs.Container();
 		main.shadow = new createjs.Shadow(
 			"#2a292699",
-			-10 * sizeScaler,
-			10 * sizeScaler,
+			-10 * this.sizeScaler,
+			10 * this.sizeScaler,
 			0
 		);
 		this.stage.addChild(main);
@@ -337,12 +346,12 @@ export default class Demo {
 		shape.graphics.beginFill("#2a2926");
 		shape.graphics.drawCircle(0, 0, radius);
 
-		shape.radius = radius;
+		shape.radius = radius * this.sizeScaler;
 
 		shape.graphics.beginFill(this.getRandomColor());
 		shape.graphics.drawCircle(0, 0, radius - stroke);
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
@@ -352,7 +361,7 @@ export default class Demo {
 		shape.graphics.beginFill("#2a2926");
 		shape.graphics.drawRect(0, 0, radius * 2, radius * 2);
 
-		shape.radius = radius * 1.4142;
+		shape.radius = radius * 1.4142 * this.sizeScaler;
 
 		shape.graphics.beginFill(this.getRandomColor());
 		shape.graphics.drawRect(
@@ -362,11 +371,11 @@ export default class Demo {
 			radius * 2 - stroke
 		);
 
-		shape.regX = shape.regY = radius * sizeScaler;
+		shape.regX = shape.regY = radius * this.sizeScaler;
 
 		shape.rotation = Math.random() * 360;
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
@@ -376,24 +385,24 @@ export default class Demo {
 
 		shape.graphics.ss(30, 1);
 		shape.graphics.beginStroke(`#2a2926`);
-		shape.graphics.moveTo(0, 0);
-		shape.graphics.lineTo(length, 0);
+		shape.graphics.moveTo(-length / 2, 0);
+		shape.graphics.lineTo(length / 2, 0);
 
 		shape.graphics.ss(26, 1);
 		shape.graphics.beginStroke(this.getRandomColor());
-		shape.graphics.moveTo(0, 0);
-		shape.graphics.lineTo(length, 0);
+		shape.graphics.moveTo(-length / 2, 0);
+		shape.graphics.lineTo(length / 2, 0);
 
-		shape.radius = shape.regX = ((length + 30) / 2) * sizeScaler;
+		shape.radius = ((length + 30) / 2) * this.sizeScaler;
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
 
 	getTriangle(radius = 20) {
 		const shape = new createjs.Shape();
-		shape.radius = radius * sizeScaler;
+		shape.radius = radius * this.sizeScaler;
 
 		const sector = (Math.PI * 2) / 3;
 
@@ -420,7 +429,7 @@ export default class Demo {
 		);
 		shape.graphics.lineTo(innerRadius * Math.cos(0), innerRadius * Math.sin(0));
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
@@ -486,9 +495,10 @@ export default class Demo {
 			);
 		});
 
-		shape.radius = shape.regX = gap * (iterations / 2) * sizeScaler;
+		shape.regX = gap * (iterations / 2);
+		shape.radius = shape.regX * this.sizeScaler;
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
@@ -552,9 +562,10 @@ export default class Demo {
 			shape.graphics.lineTo(point.x, point.y);
 		});
 
-		shape.radius = shape.regX = gap * (iterations / 2) * sizeScaler;
+		shape.regX = gap * (iterations / 2);
+		shape.radius = shape.regX * this.sizeScaler;
 
-		shape.scaleX = shape.scaleY = sizeScaler;
+		shape.scaleX = shape.scaleY = this.sizeScaler;
 
 		return shape;
 	}
