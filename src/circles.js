@@ -12,7 +12,7 @@ const PI2 = Math.PI * 2;
 export default class Demo {
 	constructor(container) {
 		this.container = container;
-		this.capturer = new window.CCapture({ format: 'png', framerate: 60, timeLimit: 3 });
+		// this.capturer = new window.CCapture({ format: 'png', framerate: 60, timeLimit: 3 });
 
 		console.log(`this.capturer`, this.capturer);
 
@@ -104,19 +104,22 @@ export default class Demo {
 
 			circles.push({
 				circle: circle,
-				drawRadius: this.stage.canvas.offsetWidth / 3,
+				drawRadius:
+					this.stage.canvas.offsetWidth / 3 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
 				lookUpRadius: 100 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
 			});
 		}
 
 		createjs.Ticker.addEventListener('tick', (event) => {
-			this.capturer.capture(this.container);
+			if (this.capturer) this.capturer.capture(this.container);
 			if (!event.paused) {
 				// Actions carried out when the Ticker is not paused.
 
 				const now = performance.now();
 
-				for (const item of circles) {
+				for (let index = 0; index < circles.length; index++) {
+					const item = circles[index];
+
 					const { circle, drawRadius, lookUpRadius } = item;
 
 					circle.x = this.stage.canvas.offsetWidth / 2;
@@ -124,16 +127,25 @@ export default class Demo {
 
 					circle.graphics.clear();
 					circle.graphics.setStrokeStyle(1);
-					circle.graphics.beginStroke(`rgba(0,0,0,${1 / howManyCircles})`);
+
+					const color = `hsl(${MathUtils.mapLinear(
+						index,
+						0,
+						howManyCircles,
+						0,
+						360
+					)}, 100%, ${MathUtils.mapLinear(index, 0, howManyCircles, 0, 75)}%)`;
+
+					circle.graphics.beginStroke(color);
 
 					const howMany = 180 * 1;
-					const distanceMult = 40;
+					const distanceMult = this.stage.canvas.offsetWidth / 20;
 
 					for (let index = 0; index < howMany; index++) {
 						const angle = (PI2 / howMany) * index;
 
 						const noiseMult = 0.02;
-						const noiseSpeedMult = 0.0007;
+						const noiseSpeedMult = 0.0005;
 
 						const lookupX = Math.sin(angle) * (lookUpRadius * noiseMult);
 						const lookupY = Math.cos(angle) * (lookUpRadius * noiseMult);
