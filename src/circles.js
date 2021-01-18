@@ -105,8 +105,9 @@ export default class Demo {
 			circles.push({
 				circle: circle,
 				drawRadius:
-					this.stage.canvas.offsetWidth / 3 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
+					this.stage.canvas.offsetWidth / 3 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 50),
 				lookUpRadius: 100 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
+				// lookUpRadius: 100,
 			});
 		}
 
@@ -126,7 +127,8 @@ export default class Demo {
 					circle.y = this.stage.canvas.offsetHeight / 2;
 
 					circle.graphics.clear();
-					circle.graphics.setStrokeStyle(1);
+					circle.graphics.setStrokeStyle(MathUtils.mapLinear(index, 0, howManyCircles, 1, 2));
+					// circle.graphics.setStrokeDash([40, 20], 0);
 
 					const color = `hsl(${MathUtils.mapLinear(
 						index,
@@ -134,17 +136,40 @@ export default class Demo {
 						howManyCircles,
 						0,
 						360
-					)}, 100%, ${MathUtils.mapLinear(index, 0, howManyCircles, 0, 75)}%)`;
+					)}, 100%, ${MathUtils.mapLinear(index, 0, howManyCircles, 75, 0)}%)`;
 
 					circle.graphics.beginStroke(color);
 
+					// circle.graphics.beginRadialGradientStroke(
+					// 	['#F00', '#0F0', '#00F'],
+					// 	[0, 0.5, 1],
+					// 	0,
+					// 	0,
+					// 	0,
+					// 	0,
+					// 	0,
+					// 	150
+					// );
+
 					const howMany = 180 * 1;
-					const distanceMult = this.stage.canvas.offsetWidth / 20;
+					const distanceMult = this.stage.canvas.offsetWidth / 10;
 
 					for (let index = 0; index < howMany; index++) {
-						const angle = (PI2 / howMany) * index;
+						let angle = (PI2 / howMany) * index;
 
-						const noiseMult = 0.02;
+						// angle += (index * );
+
+						// const color = `hsl(${MathUtils.mapLinear(
+						// 	angle,
+						// 	0,
+						// 	PI2,
+						// 	0,
+						// 	360
+						// )}, 100%, ${MathUtils.mapLinear(index, 0, howManyCircles, 75, 0)}%)`;
+
+						// circle.graphics.setStrokeStyle(color);
+
+						const noiseMult = 0.01;
 						const noiseSpeedMult = 0.0005;
 
 						const lookupX = Math.sin(angle) * (lookUpRadius * noiseMult);
@@ -158,8 +183,11 @@ export default class Demo {
 						const nextY = Math.sin(angle) * (drawRadius + random);
 						circle.graphics.lineTo(nextX, nextY);
 					}
+
 					circle.graphics.closePath();
 					circle.graphics.endStroke();
+
+					circle.rotation += Math.PI * 0.1;
 				}
 			}
 		});
