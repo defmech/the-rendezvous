@@ -89,7 +89,7 @@ export default class Demo {
 		// const radius = this.stage.canvas.offsetWidth / 6;
 		// const lookUpRadius = 100;
 
-		const howManyCircles = 15;
+		const howManyCircles = 5;
 		const circles = [];
 
 		console.log(`this.stage.canvas.offsetWidth`, this.stage.canvas.offsetWidth);
@@ -100,13 +100,14 @@ export default class Demo {
 			const circle = new createjs.Shape();
 			circle.x = this.stage.canvas.offsetWidth / 2;
 			circle.y = this.stage.canvas.offsetHeight / 2;
+			circle.compositeOperation = 'screen';
 			main.addChild(circle);
 
 			circles.push({
 				circle: circle,
 				drawRadius:
-					this.stage.canvas.offsetWidth / 3 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 50),
-				lookUpRadius: 100 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
+					this.stage.canvas.offsetWidth / 3 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 10),
+				lookUpRadius: 50 - MathUtils.mapLinear(index, 0, howManyCircles, 0, 20),
 				// lookUpRadius: 100,
 			});
 		}
@@ -127,16 +128,10 @@ export default class Demo {
 					circle.y = this.stage.canvas.offsetHeight / 2;
 
 					circle.graphics.clear();
-					circle.graphics.setStrokeStyle(MathUtils.mapLinear(index, 0, howManyCircles, 1, 2));
-					// circle.graphics.setStrokeDash([40, 20], 0);
+					circle.graphics.setStrokeStyle(1);
+					// circle.graphics.setStrokeDash([2, 2], 0);
 
-					const color = `hsl(${MathUtils.mapLinear(
-						index,
-						0,
-						howManyCircles,
-						0,
-						360
-					)}, 100%, ${MathUtils.mapLinear(index, 0, howManyCircles, 75, 0)}%)`;
+					const color = `hsla(${MathUtils.mapLinear(index, 0, howManyCircles, 0, 360)}, 100%, 75%, 75%)`;
 
 					circle.graphics.beginStroke(color);
 
